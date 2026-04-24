@@ -5,7 +5,7 @@ autoinstall:
   identity:
     hostname: ubuntu
     username: lucas
-    password: "$6$rounds=4096$abc123$HASH_AQUI"
+    password: "$6$tunXni3uQ2x5b3.U$/BsfPk0CM8dW7Cj89HDMFUcNI5jMRODfHWkry7kq907QlQ5OWajK0oGjEUrKR73JS0rzPLwFes0r9DleW1zdO1"
 
   locale: pt_BR.UTF-8
   keyboard:
