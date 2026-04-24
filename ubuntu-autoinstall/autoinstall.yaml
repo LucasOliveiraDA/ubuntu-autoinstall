@@ -1,0 +1,57 @@
+#cloud-config
+autoinstall:
+  version: 1
+
+  identity:
+    hostname: ubuntu
+    username: lucas
+    password: "$6$rounds=4096$abc123$HASH_AQUI"
+
+  locale: pt_BR.UTF-8
+  keyboard:
+    layout: br
+
+  storage:
+    config:
+      - type: disk
+        id: disk0
+        match:
+          size: largest
+        ptable: gpt
+        wipe: superblock-recursive
+
+      - type: partition
+        id: efi-part
+        device: disk0
+        size: 512M
+        flag: boot
+
+      - type: format
+        volume: efi-part
+        fstype: fat32
+
+      - type: mount
+        device: efi-part
+        path: /boot/efi
+
+      - type: partition
+        id: root-part
+        device: disk0
+        size: -1
+
+      - type: format
+        volume: root-part
+        fstype: btrfs
+
+      - type: mount
+        device: root-part
+        path: /
+
+  packages:
+    - btrfs-progs
+    - timeshift
+    - tlp
+    - zram-tools
+
+  late-commands:
+    - curtin in-target -- bash /root/setup-btrfs.sh
